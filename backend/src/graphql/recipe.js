@@ -5,8 +5,9 @@ export const recipeSchema = `#graphql
     id: ID!
     title: String!
     author: User
-    contents: String
-    tags: [String!]
+    ingredients: String
+    image: String
+    likes: String
     createdAt: Float
     updatedAt: Float
   }

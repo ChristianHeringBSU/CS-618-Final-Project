@@ -4,6 +4,7 @@ import {
     listRecipesByTag,
     getRecipeById,
     deleteRecipe,
+    likeRecipe,
     updateRecipe,
     createRecipe,
 } from "../services/recipes.js";
@@ -66,7 +67,6 @@ export function recipesRoutes(app) {
     app.delete("/api/v1/recipes/:id", requireAuth, async (req, res) => {
         try {
             const { deletedCount } = await deleteRecipe(
-                req.auth.sub,
                 req.params.id,
             );
             if (deletedCount === 0) return res.sendStatus(404);
@@ -76,4 +76,14 @@ export function recipesRoutes(app) {
             return res.status(500).end();
         }
     });
+    app.post("/api/v1/recipes/:id/like", requireAuth, async (req, res) => {
+        try {
+            const likedCount = await likeRecipe(req.params.id);
+            
+            return res.send(likedCount);
+        } catch (err) {
+            console.error("error liking recipe", err);
+            return res.status(500).end();
+        }
+    })
 }

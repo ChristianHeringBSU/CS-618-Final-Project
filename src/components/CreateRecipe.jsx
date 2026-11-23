@@ -45,7 +45,16 @@ export function CreateRecipe() {
                 />
             </div>
             <br />
-            {/* TODO: Add CreateIngredient Component Here */}
+            <div>
+                <label htmlFor='create-ingredients'>Ingredients: </label>
+                <textarea
+                    type='text'
+                    name='create-ingredients'
+                    id='create-ingredients'
+                    value={ingredients}
+                    onChange={(e) => setIngredients(e.target.value)}
+                />
+            </div>
             <br />
             <div>
                 <label htmlFor='create-title'>Image URL: </label>

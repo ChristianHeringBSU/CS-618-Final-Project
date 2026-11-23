@@ -26,7 +26,7 @@ export function Blog() {
     return (
         <div style={{ padding: 8 }}>
             <Helmet>
-                <title>Full-Stack React Blog</title>
+                <title>Ball State Real-Time Recipe Blog</title>
                 <meta
                     name='description'
                     content='A blog full of articles about full-stack React development.'

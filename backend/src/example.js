@@ -10,8 +10,8 @@ await initDatabase();
 const recipe = new Recipe({
     title: "Hello second recipe!",
     author: "John Doe",
-    contents: "This is my new exciting content.",
-    tags: ["frontend"],
+    ingredients: "This is my new exciting content.",
+    image: "cool food image",
 });
 await recipe.save();
 

@@ -3,13 +3,10 @@ import mongoose, { Schema } from "mongoose";
 const recipeSchema = new Schema(
     {
         title: { type: String, required: true },
-        ingredients: {
-            type: [Schema.Types.ObjectId],
-            ref: "ingredient",
-            required: true,
-        },
+        ingredients: { type: String, required: true },
         author: { type: Schema.Types.ObjectId, ref: "user", required: true },
         image: String,
+        likes: Number,
     },
     { timestamps: true },
 );

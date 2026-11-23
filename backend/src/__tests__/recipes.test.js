@@ -62,16 +62,16 @@ describe("deleting recipes", () => {
 describe("updating recipes", () => {
     test("should update the specified property", async () => {
         await updateRecipe(testUser._id, createdSampleRecipes[0]._id, {
-            contents: "some content change",
+            ingredients: "some content change",
         });
         const updatedRecipe = await Recipe.findById(
             createdSampleRecipes[0]._id,
         );
-        expect(updatedRecipe.contents).toEqual("some content change");
+        expect(updatedRecipe.ingredients).toEqual("some content change");
     });
     test("should not update other properties", async () => {
         await updateRecipe(testUser._id, createdSampleRecipes[0]._id, {
-            contents: "some content change",
+            ingredients: "some content change",
         });
         const updatedRecipe = await Recipe.findById(
             createdSampleRecipes[0]._id,
@@ -80,7 +80,7 @@ describe("updating recipes", () => {
     });
     test("should update the updatedAt timestamp", async () => {
         await updateRecipe(testUser._id, createdSampleRecipes[0]._id, {
-            contents: "some content change",
+            ingredients: "some content change",
         });
         const updatedRecipe = await Recipe.findById(
             createdSampleRecipes[0]._id,
@@ -94,7 +94,7 @@ describe("updating recipes", () => {
             testUser._id,
             "000000000000000000000000",
             {
-                contents: "some content change",
+                ingredients: "some content change",
             },
         );
         expect(recipe).toEqual(null);
@@ -152,8 +152,8 @@ describe("creating recipes", () => {
     test("with all parameters should succeed", async () => {
         const recipe = {
             title: "Hello Mongoose!",
-            contents: "This recipe is stored in a MongoDB database using",
-            tags: ["mongoose", "mongodb"],
+            ingredients: "This recipe is stored in a MongoDB database using",
+            image: "example url",
         };
         const createdRecipe = await createRecipe(testUser._id, recipe);
         expect(createdRecipe._id).toBeInstanceOf(mongoose.Types.ObjectId);
@@ -164,8 +164,8 @@ describe("creating recipes", () => {
     });
     test("without title should fail", async () => {
         const recipe = {
-            contents: "Recipe with no title",
-            tags: ["empty"],
+            ingredients: "Recipe with no title",
+            image: "link to image",
         };
         try {
             await createRecipe(testUser._id, recipe);

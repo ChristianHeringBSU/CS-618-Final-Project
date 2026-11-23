@@ -4,8 +4,9 @@ export const RECIPE_FIELDS = gql`
     fragment RecipeFields on Recipe {
         id
         title
-        contents
-        tags
+        ingredients
+        image
+        likes
         updatedAt
         createdAt
         author {
@@ -16,7 +17,7 @@ export const RECIPE_FIELDS = gql`
 
 export const GET_RECIPES = gql`
     ${RECIPE_FIELDS}
-    query getRecipes($options: RECIPEsOptions) {
+    query getRecipes($options: RecipesOptions) {
         recipes(options: $options) {
             ...RecipeFields
         }
@@ -35,10 +36,32 @@ export const GET_RECIPES_BY_AUTHOR = gql`
 export const CREATE_RECIPE = gql`
     mutation createRecipe(
         $title: String!
-        $contents: String
-        $tags: [String!]
+        $ingredients: String
+        $image: String
     ) {
-        createRecipe(title: $title, contents: $contents, tags: $tags) {
+        createRecipe(title: $title, ingredients: $ingredients, image: $image) {
+            id
+            title
+        }
+    }
+`; // Required Backtick
+
+export const DELETE_RECIPE = gql`
+    mutation deleteRecipe(
+        $id: String
+    ) {
+        deleteRecipe(id: $id) {
+            id
+            title
+        }
+    }
+`; // Required Backtick
+
+export const LIKE_RECIPE = gql`
+    mutation likeRecipe(
+        $id: String
+    ) {
+        likeRecipe(id: $id) {
             id
             title
         }

@@ -1,8 +1,14 @@
 import { Recipe } from "../db/models/recipe.js";
 import { User } from "../db/models/user.js";
 
-export async function createRecipe(userId, { title, contents, tags }) {
-    const recipe = new Recipe({ title, author: userId, contents, tags });
+export async function createRecipe(userId, { title, ingredients, image }) {
+    const recipe = new Recipe({
+        title,
+        author: userId,
+        ingredients,
+        image,
+        likes: 0,
+    });
     return await recipe.save();
 }
 
@@ -34,15 +40,22 @@ export async function getRecipeById(recipeId) {
 export async function updateRecipe(
     userId,
     recipeId,
-    { title, contents, tags },
+    { title, ingredients, image },
 ) {
     return await Recipe.findOneAndUpdate(
         { _id: recipeId, author: userId },
-        { $set: { title, contents, tags } },
+        { $set: { title, ingredients, image } },
         { new: true },
     );
 }
 
-export async function deleteRecipe(userId, recipeId) {
-    return await Recipe.deleteOne({ _id: recipeId, author: userId });
+export async function deleteRecipe(recipeId) {
+    return await Recipe.deleteOne({ _id: recipeId });
+}
+
+export async function likeRecipe(postId) {
+    return await Recipe.findOneAndUpdate(
+        { _id: postId },
+        { $inc: { likes: 1 } },
+    );
 }

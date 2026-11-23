@@ -1,12 +1,13 @@
 import { GraphQLError } from "graphql";
 import { createUser, loginUser } from "../services/users.js";
-import { createRecipe } from "../services/recipes.js";
+import { createRecipe, likeRecipe } from "../services/recipes.js";
 
 export const mutationSchema = `#graphql
 type Mutation {
       signupUser(username: String!, password: String!): User
       loginUser(username: String!, password: String!): String
-      createRecipe(title: String!, contents: String, tags: [String]): Recipe
+      createRecipe(title: String!, ingredients: String, image: String): Recipe
+      likeRecipe(id: String): Recipe
     }
 `; // Required Backtick
 
@@ -18,7 +19,7 @@ export const mutationResolver = {
         loginUser: async (parent, { username, password }) => {
             return await loginUser({ username, password });
         },
-        createRecipe: async (parent, { title, contents, tags }, { auth }) => {
+        createRecipe: async (parent, { title, ingredients, image }, { auth }) => {
             if (!auth) {
                 throw new GraphQLError(
                     "You need to be authenticated to perform this action.",
@@ -29,7 +30,20 @@ export const mutationResolver = {
                     },
                 );
             }
-            return await createRecipe(auth.sub, { title, contents, tags });
+            return await createRecipe(auth.sub, { title, ingredients, image });
         },
+        likeRecipe: async (parent, { id }, { auth }) => {
+            if (!auth) {
+                throw new GraphQLError(
+                    "You need to be authenticated to perform this action.",
+                    {
+                        extensions: {
+                            code: "UNAUTHORIZED",
+                        },
+                    },
+                );
+            }
+            return await likeRecipe(id);
+        }
     },
 };

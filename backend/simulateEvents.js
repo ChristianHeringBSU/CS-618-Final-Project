@@ -40,7 +40,9 @@ async function simulateEvents() {
                     createdUsers[Math.floor(Math.random() * simulatedUsers)];
                 return await createRecipe(randomUser._id, {
                     title: `Test Recipe ${p}`,
-                    contents: `This is a test recipe ${p}`,
+                    ingredients: `This is a test recipe ingredient list ${p}`,
+                    image: `This is a link to a test recipe image ${p}`,
+                    likes: `0 ${p}`
                 });
             }),
     );

@@ -75,13 +75,6 @@ export function ViewRecipe({ recipeId }) {
                         property='og:article:author'
                         content={userInfo.username}
                     />
-                    {(recipe.tags ?? []).map((tag) => (
-                        <meta
-                            key={tag}
-                            property='og:article:tag'
-                            content={tag}
-                        />
-                    ))}
                 </Helmet>
             )}
             <Header />
