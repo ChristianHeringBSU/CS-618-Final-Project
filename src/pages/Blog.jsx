@@ -4,24 +4,25 @@ import { useQuery as useGraphQLQuery } from "@apollo/client/react/index.js";
 
 import { RecipeList } from "../components/RecipeList.jsx";
 import { CreateRecipe } from "../components/CreateRecipe.jsx";
-import { RecipeFilter } from "../components/RecipeFilter.jsx";
+// import { RecipeFilter } from "../components/RecipeFilter.jsx";
 import { RecipeSorting } from "../components/RecipeSorting.jsx";
-import { GET_RECIPES, GET_RECIPES_BY_AUTHOR } from "../api/graphql/recipes.js";
+import { GET_RECIPES_BY_LIKE_COUNT } from "../api/graphql/recipes.js";
 import { Header } from "../components/Header.jsx";
 
 export function Blog() {
-    const [author, setAuthor] = useState("");
-    const [sortBy, setSortBy] = useState("createdAt");
     const [sortOrder, setSortOrder] = useState("descending");
 
-    const recipesQuery = useGraphQLQuery(
-        author ? GET_RECIPES_BY_AUTHOR : GET_RECIPES,
-        {
-            variables: { author, options: { sortBy, sortOrder } },
-        },
-    );
-    const recipes =
-        recipesQuery.data?.recipesByAuthor ?? recipesQuery.data?.recipes ?? [];
+    const recipesQuery = useGraphQLQuery(GET_RECIPES_BY_LIKE_COUNT, {
+        variables: { sortOrder },
+    });
+
+    var recipes = recipesQuery.data?.recipesByLikeCount ?? []
+
+    if (sortOrder == "descending") {
+        recipes = [...recipes].sort((a, b) => b.likes - a.likes);
+    } else {
+        recipes = [...recipes].sort((a, b) => a.likes - b.likes);
+    }
 
     return (
         <div style={{ padding: 8 }}>
@@ -39,17 +40,14 @@ export function Blog() {
             <CreateRecipe />
             <br />
             <hr />
-            Filter by:
+            {/* Filter by:
             <RecipeFilter
                 field='author'
                 value={author}
                 onChange={(value) => setAuthor(value)}
             />
-            <br />
+            <br /> */}
             <RecipeSorting
-                fields={["createdAt", "updatedAt"]}
-                value={sortBy}
-                onChange={(value) => setSortBy(value)}
                 orderValue={sortOrder}
                 onOrderChange={(orderValue) => setSortOrder(orderValue)}
             />

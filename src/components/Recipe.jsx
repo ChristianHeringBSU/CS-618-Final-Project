@@ -10,7 +10,7 @@ import { User } from "./User.jsx";
 import {
     LIKE_RECIPE,
     GET_RECIPES,
-    GET_RECIPES_BY_AUTHOR,
+    GET_RECIPES_BY_LIKE_COUNT,
 } from "../api/graphql/recipes.js";
 
 export function Recipe({
@@ -29,7 +29,7 @@ export function Recipe({
     const [likeRecipe, { loading, data }] = useGraphQLMutation(LIKE_RECIPE, {
         variables: { id },
         context: { headers: { Authorization: `Bearer ${token}` } },
-        refetchQueries: [GET_RECIPES, GET_RECIPES_BY_AUTHOR],
+        refetchQueries: [GET_RECIPES, GET_RECIPES_BY_LIKE_COUNT],
     });
 
     const handleSubmit = (e) => {

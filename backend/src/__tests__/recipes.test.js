@@ -3,7 +3,7 @@ import { describe, expect, test, beforeEach, beforeAll } from "@jest/globals";
 import {
     createRecipe,
     listAllRecipes,
-    listRecipesByAuthor,
+    listRecipesByLikeCount,
     listRecipesByTag,
     getRecipeById,
     updateRecipe,
@@ -139,7 +139,7 @@ describe("listing recipes", () => {
         );
     });
     test("should be able to filter recipes by author", async () => {
-        const recipes = await listRecipesByAuthor(testUser.username);
+        const recipes = await listRecipesByLikeCount(testUser.username);
         expect(recipes.length).toBe(3);
     });
     test("should be able to filter recipes by tag", async () => {

@@ -24,10 +24,10 @@ export const GET_RECIPES = gql`
     }
 `; // Required Backtick
 
-export const GET_RECIPES_BY_AUTHOR = gql`
+export const GET_RECIPES_BY_LIKE_COUNT = gql`
     ${RECIPE_FIELDS}
-    query getRecipesByAuthor($author: String!, $options: RecipesOptions) {
-        recipesByAuthor(username: $author, options: $options) {
+    query getRecipesByLikeCount($ordering: String) {
+        recipesByLikeCount(ordering: $ordering) {
             ...RecipeFields
         }
     }
@@ -47,9 +47,7 @@ export const CREATE_RECIPE = gql`
 `; // Required Backtick
 
 export const DELETE_RECIPE = gql`
-    mutation deleteRecipe(
-        $id: String
-    ) {
+    mutation deleteRecipe($id: String) {
         deleteRecipe(id: $id) {
             id
             title
@@ -58,9 +56,7 @@ export const DELETE_RECIPE = gql`
 `; // Required Backtick
 
 export const LIKE_RECIPE = gql`
-    mutation likeRecipe(
-        $id: String
-    ) {
+    mutation likeRecipe($id: String) {
         likeRecipe(id: $id) {
             id
             title

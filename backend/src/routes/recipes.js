@@ -1,6 +1,6 @@
 import {
     listAllRecipes,
-    listRecipesByAuthor,
+    listRecipesByLikeCount,
     listRecipesByTag,
     getRecipeById,
     deleteRecipe,
@@ -12,15 +12,15 @@ import { requireAuth } from "../middleware/jwt.js";
 
 export function recipesRoutes(app) {
     app.get("/api/v1/recipes", async (req, res) => {
-        const { sortBy, sortOrder, author, tag } = req.query;
+        const { sortBy, sortOrder, ordering, tag } = req.query;
         const options = { sortBy, sortOrder };
         try {
-            if (author && tag) {
+            if (ordering && tag) {
                 return res
                     .status(400)
                     .json({ error: "query by either author or tag, not both" });
-            } else if (author) {
-                return res.json(await listRecipesByAuthor(author, options));
+            } else if (ordering) {
+                return res.json(await listRecipesByLikeCount(ordering));
             } else if (tag) {
                 return res.json(await listRecipesByTag(tag, options));
             } else {

@@ -1,4 +1,4 @@
-import { listRecipesByAuthor } from "../services/recipes.js";
+import { listRecipesByLikeCount } from "../services/recipes.js";
 
 export const userSchema = `#graphql
   type User {
@@ -10,7 +10,7 @@ export const userSchema = `#graphql
 export const userResolver = {
     User: {
         recipes: async (user) => {
-            return await listRecipesByAuthor(user.username);
+            return await listRecipesByLikeCount(user.username);
         },
     },
 };

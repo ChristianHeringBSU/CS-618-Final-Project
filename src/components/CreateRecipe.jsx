@@ -7,7 +7,7 @@ import { useAuth } from "../contexts/AuthContext.jsx";
 import {
     CREATE_RECIPE,
     GET_RECIPES,
-    GET_RECIPES_BY_AUTHOR,
+    GET_RECIPES_BY_LIKE_COUNT,
 } from "../api/graphql/recipes.js";
 
 export function CreateRecipe() {
@@ -21,7 +21,7 @@ export function CreateRecipe() {
         {
             variables: { title, ingredients, image },
             context: { headers: { Authorization: `Bearer ${token}` } },
-            refetchQueries: [GET_RECIPES, GET_RECIPES_BY_AUTHOR],
+            refetchQueries: [GET_RECIPES, GET_RECIPES_BY_LIKE_COUNT],
         },
     );
 

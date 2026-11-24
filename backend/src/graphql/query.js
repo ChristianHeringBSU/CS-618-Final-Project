@@ -1,7 +1,7 @@
 import {
     getRecipeById,
     listAllRecipes,
-    listRecipesByAuthor,
+    listRecipesByLikeCount,
     listRecipesByTag,
 } from "../services/recipes.js";
 
@@ -14,7 +14,7 @@ export const querySchema = `#graphql
   type Query {
     test: String
     recipes(options: RecipesOptions): [Recipe!]!
-    recipesByAuthor(username: String!, options: RecipesOptions): [Recipe!]!
+    recipesByLikeCount(ordering: String): [Recipe!]!
     recipesByTag(tag: String!, options: RecipesOptions): [Recipe!]!
     recipeById(id: ID!, options: RecipesOptions): Recipe
   }
@@ -28,8 +28,8 @@ export const queryResolver = {
         recipes: async (parent, { options }) => {
             return await listAllRecipes(options);
         },
-        recipesByAuthor: async (parent, { username, options }) => {
-            return await listRecipesByAuthor(username, options);
+        recipesByLikeCount: async (ordering) => {
+            return await listRecipesByLikeCount(ordering);
         },
         recipesByTag: async (parent, { tag, options }) => {
             return await listRecipesByTag(tag, options);
